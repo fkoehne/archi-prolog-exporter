@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Export archi models to analyse them with prolog
+Bundle-SymbolicName: archi-prolog-exporter;singleton:=true
+Bundle-Version: 0.0.0.SNAPSHOT
+Bundle-Vendor: Frank Köhne
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.archimatetool.editor

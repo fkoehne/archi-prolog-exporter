@@ -6,6 +6,10 @@ package de.fkoehne.archi.archi2prolog;
 
 import org.eclipse.osgi.util.NLS;
 
+/**
+ * This class provides natural language support and encapsulates all texts in the user interface.
+ *
+ */
 public class Messages extends NLS {
 
     private static final String BUNDLE_NAME = "de.fkoehne.archi.archi2prolog.messages"; //$NON-NLS-1$

@@ -44,7 +44,7 @@ public class PrologExporter implements IModelExporter {
     }
 
     @Override
-    public void export(IArchimateModel model) throws IOException {
+    public void export(final IArchimateModel model) throws IOException {
         File file = askSaveFile();
         if (file == null) {
             return;
@@ -64,7 +64,7 @@ public class PrologExporter implements IModelExporter {
         writer.close();
     }
 
-    private void writeFolder(IFolder folder) throws IOException {
+    private void writeFolder(final IFolder folder) throws IOException {
         List<EObject> list = new ArrayList<EObject>();
 
         getElements(folder, list);

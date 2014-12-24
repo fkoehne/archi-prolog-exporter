@@ -1,4 +1,4 @@
-:- module(vocabulary, [named/2, named/1, typed/2, goal/1, describe/2]).
+:- module(vocabulary, [named/2, named/1, typed/2, goal/1, describe/2, infrastructure/1]).
 
 /*
 
@@ -42,3 +42,14 @@ describe(X, Description):-
 	atom_concat(Part2, ', ', Part3),
 	atom_concat(Part3, X, Part4),
 	atom_concat(Part4, ')', Description).
+	
+/*
+ Is a given Element part of the infrastructure layer?
+ X=Element ID.
+*/
+infrastructure(X):-element('node',X,_).
+infrastructure(X):-element('infrastructureservice',X,_).
+infrastructure(X):-element('infrastructureinterface',X,_).
+infrastructure(X):-element('infrastructurefunction',X,_).
+infrastructure(X):-element('device',X,_).
+	

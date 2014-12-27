@@ -3,8 +3,9 @@ This a prolog representation of an Archi model (http://www.archimatetool.com).
 It was created using the prolog exporter plugin (https://github.com/fkoehne/archi-prolog-exporter).
 The syntax (esp. the module syntax) is tested with SWI-Prolog, but should work with other engines as well.
 
-Export date: Wed Dec 24 17:07:38 CET 2014
+Export date: Sat Dec 27 16:13:52 CET 2014
 Model: prologExample
+[undocumented]
 */
 :- use_module(vocabulary).
 :- use_module(traversal).

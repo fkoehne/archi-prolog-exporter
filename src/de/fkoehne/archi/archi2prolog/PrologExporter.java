@@ -12,11 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.osgi.util.NLS;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
 
 import com.archimatetool.editor.model.IModelExporter;
 import com.archimatetool.model.FolderType;
@@ -24,6 +19,9 @@ import com.archimatetool.model.IArchimateElement;
 import com.archimatetool.model.IArchimateModel;
 import com.archimatetool.model.IFolder;
 import com.archimatetool.model.IRelationship;
+
+import de.fkoehne.archi.archi2prolog.io.DialogFileChooser;
+import de.fkoehne.archi.archi2prolog.io.FileChooser;
 
 /**
  * Exports archi models as prolog clauses in order to enable flexible queries and reasoning. This class is based on the
@@ -33,19 +31,24 @@ import com.archimatetool.model.IRelationship;
  */
 public class PrologExporter implements IModelExporter {
 
-    String MY_EXTENSION = ".pl"; //$NON-NLS-1$
-
-    String MY_EXTENSION_WILDCARD = "*.pl"; //$NON-NLS-1$
-
     private OutputStreamWriter writer;
 
-    public PrologExporter() {
+    /**
+     * This object is used to determine the target file for the export.
+     */
+    private final FileChooser fileChooser;
 
+    public PrologExporter() {
+        fileChooser = new DialogFileChooser();
+    }
+
+    public PrologExporter(final FileChooser chooser) {
+        this.fileChooser = chooser;
     }
 
     @Override
     public void export(final IArchimateModel model) throws IOException {
-        File file = askSaveFile();
+        File file = fileChooser.choose();
         if (file == null) {
             return;
         }
@@ -127,34 +130,4 @@ public class PrologExporter implements IModelExporter {
         return s;
     }
 
-    /**
-     * Ask user for file name to save to
-     */
-    private File askSaveFile() {
-        FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
-        dialog.setText(Messages.Export);
-        dialog.setFilterExtensions(new String[] { MY_EXTENSION_WILDCARD, "*.*" }); //$NON-NLS-1$
-        String path = dialog.open();
-        if (path == null) {
-            return null;
-        }
-
-        // Only Windows adds the extension by default
-        if (dialog.getFilterIndex() == 0 && !path.endsWith(MY_EXTENSION)) {
-            path += MY_EXTENSION;
-        }
-
-        File file = new File(path);
-
-        // Make sure the file does not already exist
-        if (file.exists()) {
-            boolean result = MessageDialog.openQuestion(Display.getCurrent().getActiveShell(), Messages.Export,
-                    NLS.bind(Messages.FileAlreadyExists, file));
-            if (!result) {
-                return null;
-            }
-        }
-
-        return file;
-    }
 }

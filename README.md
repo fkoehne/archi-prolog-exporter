@@ -38,8 +38,13 @@ Backlog
 - [X] Create a git repository with that code
 - [X] Choose an appropriate license and add / link it
 - [X] Include motivation elements into the export
-- [ ]  "As an architect I can list all applications that use a given application (directly or transitively via application(X), uses(Y, myPotentiallyDependentApp)."
+- [X] Include the purpose of the model in the header of the prolog file
+- [X] Set up unit tests
+- [X] Integrate a prolog engine into the test framework in order to reduce cycle times
+- [ ] As an architect I can list all impacts a downtime of a given applications would have (directly or transitively).
+- [ ] As an architect I can find cycles the application and infrastructure layer
 - [ ] As model user I can see (and query) the time the export was created
+- [ ] Consistency rule: Services that are never used (on all layers seperately)
 - [ ] Consistency rule: Nodes w/o purpose
 - [ ] Consistency rule: Applications w/o goals
 - [ ] Consistency rule: Applications not used in processes

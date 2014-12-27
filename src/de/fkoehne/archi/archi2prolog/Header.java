@@ -28,6 +28,8 @@ public class Header {
         buf.append("Model: ");
         buf.append(model.getName());
         buf.append("\n");
+        buf.append(model.getPurpose() == null ? "[undocumented]" : model.getPurpose());
+        buf.append("\n");
         buf.append("*/\n");
 
         buf.append(":- use_module(vocabulary).\n");

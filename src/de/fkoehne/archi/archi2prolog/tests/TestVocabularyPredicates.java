@@ -1,64 +1,20 @@
 package de.fkoehne.archi.archi2prolog.tests;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.NoSolutionException;
-import alice.tuprolog.Prolog;
 import alice.tuprolog.SolveInfo;
-import alice.tuprolog.Theory;
 
-import com.archimatetool.model.IArchimateModel;
 import com.archimatetool.model.IArchimatePackage;
-import com.archimatetool.model.impl.ArchimateFactory;
 
-import de.fkoehne.archi.archi2prolog.PrologExporter;
-import de.fkoehne.archi.archi2prolog.io.ConstantFileChooser;
-
-public class TestVocabularyPredicates {
-
-    private IArchimateModel model;
-
-    private PrologExporter exporter;
-
-    private Prolog engine;
-
-    @Before
-    public void setup() throws FileNotFoundException, IOException, InvalidTheoryException {
-        // Create a dummy model
-        model = ArchimateFactory.init().createArchimateModel();
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getApplicationComponent(), "A", "a");
-
-        // Set up the engine with the predicates under test
-        engine = new Prolog();
-        Theory theory = new Theory(new FileInputStream("prolog/vocabulary.pl"));
-        engine.addTheory(theory);
-
-        // We will need the exporter to create .pl-Files of the dummy model but don't do that
-        // yet, in order to allow individual tests to modify the model before exporting.
-        exporter = new PrologExporter(new ConstantFileChooser());
-    }
-
-    /**
-     * Load a model file into the prolog engine
-     * 
-     * @throws InvalidTheoryException
-     * @throws IOException
-     * @throws FileNotFoundException
-     */
-    private void load() throws InvalidTheoryException, IOException, FileNotFoundException {
-        engine.addTheory(new Theory(new FileInputStream(ConstantFileChooser.EXPORT_PL)));
-    }
+public class TestVocabularyPredicates extends AbstractBaseTest {
 
     @Test
     public void withoutGoalsDoesNotFindGoals() throws IOException, MalformedGoalException, NoSolutionException,
@@ -68,10 +24,10 @@ public class TestVocabularyPredicates {
         load();
 
         // When
-        SolveInfo info = engine.solve("goal(X).");
+        SolveInfo result = engine.solve("goal(X).");
 
         // Then
-        assertFalse(info.isSuccess());
+        assertFalse(result.isSuccess());
     }
 
     @Test
@@ -83,11 +39,10 @@ public class TestVocabularyPredicates {
         load();
 
         // When
-        SolveInfo info = engine.solve("goal(X).");
+        SolveInfo result = engine.solve("goal(X).");
 
         // Then
-        assertTrue(info.isSuccess());
-        assertTrue(info.toString().endsWith("g"));
+        checkThat(result).is("g");
     }
 
     @Test
@@ -98,11 +53,10 @@ public class TestVocabularyPredicates {
         load();
 
         // When
-        SolveInfo info = engine.solve("named(X, 'A').");
+        SolveInfo result = engine.solve("named(X, 'A').");
 
         // Then
-        assertTrue(info.isSuccess());
-        assertEquals(info.getVarValue("X").toString(), "a");
+        checkThat(result).is("a");
     }
 
     @Test
@@ -113,11 +67,38 @@ public class TestVocabularyPredicates {
         load();
 
         // When
-        SolveInfo info = engine.solve("named(X).");
+        SolveInfo result = engine.solve("named(X).");
 
         // Then
-        assertTrue(info.isSuccess());
-        assertEquals(info.getVarValue("X").toString(), "'A'");
+        checkThat(result).is("A");
+    }
+
+    @Test
+    public void infrastructureElementsCanBeFound() throws IOException, MalformedGoalException, NoSolutionException,
+            InvalidTheoryException {
+        // Given
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getNode(), "N", "n");
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getInfrastructureInterface(), "II",
+                "ii");
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getDevice(), "D", "d");
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getSystemSoftware(), "S", "s");
+
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getCommunicationPath(), "C", "c");
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getNetwork(), "N", "n");
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getArtifact(), "Ar", "ar");
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getInfrastructureService(), "Is",
+                "is");
+        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getInfrastructureFunction(), "Is",
+                "is");
+        exporter.export(model);
+        load();
+
+        // When
+        SolveInfo result = engine.solve("infrastructure(X).");
+
+        // Then
+        assertTrue(result.isSuccess());
+        checkThat(result).is("n,ii,is,d,s,c,n,ar");
     }
 
 }

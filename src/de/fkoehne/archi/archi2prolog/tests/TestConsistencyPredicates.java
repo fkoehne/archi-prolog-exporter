@@ -1,25 +1,29 @@
 package de.fkoehne.archi.archi2prolog.tests;
 
-import static org.junit.Assert.fail;
+import java.io.IOException;
 
-import org.junit.Before;
 import org.junit.Test;
 
-import com.archimatetool.model.IArchimateModel;
-import com.archimatetool.model.impl.ArchimateFactory;
+import alice.tuprolog.InvalidTheoryException;
+import alice.tuprolog.MalformedGoalException;
+import alice.tuprolog.NoSolutionException;
+import alice.tuprolog.SolveInfo;
 
-public class TestConsistencyPredicates {
-
-    private IArchimateModel model;
-
-    @Before
-    public void setup() {
-        model = ArchimateFactory.init().createArchimateModel();
-    }
+public class TestConsistencyPredicates extends AbstractBaseTest {
 
     @Test
-    public void test() {
-        fail("Not yet implemented");
+    public void shouldFindAppsWithoutInfrastructure() throws IOException, MalformedGoalException, NoSolutionException,
+            InvalidTheoryException {
+        // Given ...
+        // the application component "a" from the test base class
+        exporter.export(model);
+        load();
+
+        // When
+        SolveInfo result = engine.solve("infrastructureless(X).");
+
+        // Then
+        checkThat(result).is("a");
     }
 
 }

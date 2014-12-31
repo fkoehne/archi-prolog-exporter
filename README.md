@@ -42,7 +42,7 @@ Backlog
 - [X] Set up unit tests
 - [X] Integrate a prolog engine into the test framework in order to reduce cycle times
 - [ ] As an architect I can list all impacts a downtime of a given applications would have (directly or transitively).
-- [ ] As an architect I can find cycles the application and infrastructure layer
+- [ ] As an architect I can find cycles on the application and infrastructure layer
 - [ ] As model user I can see (and query) the time the export was created
 - [ ] Consistency rule: Services that are never used (on all layers seperately)
 - [ ] Consistency rule: Nodes w/o purpose

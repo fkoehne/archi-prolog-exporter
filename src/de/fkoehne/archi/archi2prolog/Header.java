@@ -26,7 +26,7 @@ public class Header {
         buf.append(new Date());
         buf.append("\n");
         buf.append("Model: ");
-        buf.append(model.getName());
+        buf.append(model.getName() == null ? "[undocumented]" : model.getName());
         buf.append("\n");
         buf.append(model.getPurpose() == null ? "[undocumented]" : model.getPurpose());
         buf.append("\n");

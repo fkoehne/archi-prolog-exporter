@@ -51,5 +51,9 @@ infrastructure(X):-element('node',X,_).
 infrastructure(X):-element('infrastructureservice',X,_).
 infrastructure(X):-element('infrastructureinterface',X,_).
 infrastructure(X):-element('infrastructurefunction',X,_).
+infrastructure(X):-element('network',X,_).
+infrastructure(X):-element('communicationpath',X,_).
+infrastructure(X):-element('artifact',X,_).
+infrastructure(X):-element('systemsoftware',X,_).
 infrastructure(X):-element('device',X,_).
 	

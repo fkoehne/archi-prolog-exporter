@@ -23,7 +23,7 @@ import com.archimatetool.model.IArchimatePackage;
 import com.archimatetool.model.impl.ArchimateFactory;
 
 import de.fkoehne.archi.archi2prolog.PrologExporter;
-import de.fkoehne.archi.archi2prolog.io.ConstantFileChooser;
+import de.fkoehne.archi.archi2prolog.io.MockFileChooser;
 
 public abstract class AbstractBaseTest {
 
@@ -33,11 +33,14 @@ public abstract class AbstractBaseTest {
 
     protected Prolog engine;
 
+    protected ModelUtil modelUtil;
+
     @Before
     public void setup() throws FileNotFoundException, IOException, InvalidTheoryException {
         // Create a dummy model
         model = ArchimateFactory.init().createArchimateModel();
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getApplicationComponent(), "A", "a");
+        modelUtil = new ModelUtil();
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getApplicationComponent(), "A", "a");
 
         // Set up the engine with the predicates under test
         engine = new Prolog();
@@ -48,18 +51,18 @@ public abstract class AbstractBaseTest {
 
         // We will need the exporter to create .pl-Files of the dummy model but don't do that
         // yet, in order to allow individual tests to modify the model before exporting.
-        exporter = new PrologExporter(new ConstantFileChooser());
+        exporter = new PrologExporter(new MockFileChooser());
     }
 
     /**
-     * Load a model file into the prolog engine
+     * Load a model into the prolog engine - here we assume that the MockFileChooser is in use.
      * 
      * @throws InvalidTheoryException
      * @throws IOException
      * @throws FileNotFoundException
      */
     protected void load() throws InvalidTheoryException, IOException, FileNotFoundException {
-        engine.addTheory(new Theory(new FileInputStream(ConstantFileChooser.EXPORT_PL)));
+        engine.addTheory(new Theory(exporter.getWriter().toString()));
     }
 
     /**

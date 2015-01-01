@@ -1,6 +1,10 @@
 package de.fkoehne.archi.archi2prolog.io;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.osgi.util.NLS;
@@ -19,8 +23,7 @@ public class DialogFileChooser implements FileChooser {
     /**
      * Ask user for file name to save to
      */
-    @Override
-    public File choose() {
+    public File chooseFile() {
         FileDialog dialog = new FileDialog(Display.getCurrent().getActiveShell(), SWT.SAVE);
         dialog.setText(Messages.Export);
         dialog.setFilterExtensions(new String[] { MY_EXTENSION_WILDCARD, "*.*" }); //$NON-NLS-1$
@@ -46,5 +49,11 @@ public class DialogFileChooser implements FileChooser {
         }
 
         return file;
+    }
+
+    @Override
+    public Writer chooseFileAndCreateWriter() throws FileNotFoundException {
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(chooseFile()));
+        return writer;
     }
 }

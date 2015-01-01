@@ -34,7 +34,7 @@ public class TestVocabularyPredicates extends AbstractBaseTest {
     public void withGoalsShouldFindGoal() throws IOException, MalformedGoalException, NoSolutionException,
             InvalidTheoryException {
         // Given
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getGoal(), "G", "g");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getGoal(), "G", "g");
         exporter.export(model);
         load();
 
@@ -77,19 +77,16 @@ public class TestVocabularyPredicates extends AbstractBaseTest {
     public void infrastructureElementsCanBeFound() throws IOException, MalformedGoalException, NoSolutionException,
             InvalidTheoryException {
         // Given
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getNode(), "N", "n");
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getInfrastructureInterface(), "II",
-                "ii");
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getDevice(), "D", "d");
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getSystemSoftware(), "S", "s");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getNode(), "N", "n");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getInfrastructureInterface(), "II", "ii");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getDevice(), "D", "d");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getSystemSoftware(), "S", "s");
 
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getCommunicationPath(), "C", "c");
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getNetwork(), "N", "n");
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getArtifact(), "Ar", "ar");
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getInfrastructureService(), "Is",
-                "is");
-        ModelUtil.createAndAddArchimateElement(model, IArchimatePackage.eINSTANCE.getInfrastructureFunction(), "Is",
-                "is");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getCommunicationPath(), "C", "c");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getNetwork(), "N", "n");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getArtifact(), "Ar", "ar");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getInfrastructureService(), "Is", "is");
+        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getInfrastructureFunction(), "Is", "is");
         exporter.export(model);
         load();
 

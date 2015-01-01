@@ -4,10 +4,8 @@
  */
 package de.fkoehne.archi.archi2prolog;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +29,7 @@ import de.fkoehne.archi.archi2prolog.io.FileChooser;
  */
 public class PrologExporter implements IModelExporter {
 
-    private OutputStreamWriter writer;
+    protected Writer writer;
 
     /**
      * This object is used to determine the target file for the export.
@@ -48,12 +46,7 @@ public class PrologExporter implements IModelExporter {
 
     @Override
     public void export(final IArchimateModel model) throws IOException {
-        File file = fileChooser.choose();
-        if (file == null) {
-            return;
-        }
-
-        writer = new OutputStreamWriter(new FileOutputStream(file));
+        writer = fileChooser.chooseFileAndCreateWriter();
         Header header = new Header(model);
         writer.write(header.toString());
 
@@ -128,6 +121,10 @@ public class PrologExporter implements IModelExporter {
         s = s.replace("\r\n", " "); //$NON-NLS-1$ //$NON-NLS-2$
 
         return s;
+    }
+
+    public Writer getWriter() {
+        return writer;
     }
 
 }

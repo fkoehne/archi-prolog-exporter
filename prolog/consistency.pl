@@ -7,7 +7,7 @@ Consistency rules that can be used to analyse the consistency of the model.
 */
 
 
-/* An application without at least one infrastructure which it uses is considered incomplete, since it can not be used sans infrastructure.*/
+/* An application without at least one infrastructure which it uses (or which it is somehow related to) is considered incomplete, since it can not be used sans infrastructure.*/
 infrastructureless(X):-
 	element('applicationcomponent',X,_),
 	\+ (undirectedRelationship(X,IE),

@@ -1,6 +1,7 @@
 package de.fkoehne.archi.archi2prolog.io;
 
-import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.Writer;
 
 /**
  * A strategy to determine a target file to export to.
@@ -8,5 +9,5 @@ import java.io.File;
  */
 public interface FileChooser {
 
-    File choose();
+    Writer chooseFileAndCreateWriter() throws FileNotFoundException;
 }

@@ -39,8 +39,8 @@ public abstract class AbstractBaseTest {
     public void setup() throws FileNotFoundException, IOException, InvalidTheoryException {
         // Create a dummy model
         model = ArchimateFactory.init().createArchimateModel();
-        modelUtil = new ModelUtil();
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getApplicationComponent(), "A", "a");
+        modelUtil = new ModelUtil(model);
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getApplicationComponent(), "A", "a");
 
         // Set up the engine with the predicates under test
         engine = new Prolog();

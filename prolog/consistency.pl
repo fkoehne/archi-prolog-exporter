@@ -1,4 +1,4 @@
-:- module(consistency, [infrastructureless/1]).
+:- module(consistency, [infrastructureless/1, redundantRelationship/2]).
 
 /*
 
@@ -19,3 +19,10 @@ infrastructureless(X):-
 applicationNotRelatedToGoals(X):-
 	element('applicationcomponent',X,_),
 	\+ (goal(Goal),path(X,Goal,_)).
+
+/* Multiple identical relationships between two elements are not useful (it is implied that X and Y are elements). */
+redundantRelationship(X,Y):-
+ relationship(Type,First, X, Y),
+ relationship(Type,Second, X, Y),
+ First \= Second.
+ 

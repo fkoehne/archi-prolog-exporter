@@ -34,7 +34,7 @@ public class TestVocabularyPredicates extends AbstractBaseTest {
     public void withGoalsShouldFindGoal() throws IOException, MalformedGoalException, NoSolutionException,
             InvalidTheoryException {
         // Given
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getGoal(), "G", "g");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getGoal(), "G", "g");
         exporter.export(model);
         load();
 
@@ -77,16 +77,16 @@ public class TestVocabularyPredicates extends AbstractBaseTest {
     public void infrastructureElementsCanBeFound() throws IOException, MalformedGoalException, NoSolutionException,
             InvalidTheoryException {
         // Given
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getNode(), "N", "n");
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getInfrastructureInterface(), "II", "ii");
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getDevice(), "D", "d");
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getSystemSoftware(), "S", "s");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getNode(), "N", "n");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getInfrastructureInterface(), "II", "ii");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getDevice(), "D", "d");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getSystemSoftware(), "S", "s");
 
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getCommunicationPath(), "C", "c");
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getNetwork(), "N", "n");
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getArtifact(), "Ar", "ar");
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getInfrastructureService(), "Is", "is");
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getInfrastructureFunction(), "Is", "is");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getCommunicationPath(), "C", "c");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getNetwork(), "N", "n");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getArtifact(), "Ar", "ar");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getInfrastructureService(), "Is", "is");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getInfrastructureFunction(), "Is", "is");
         exporter.export(model);
         load();
 

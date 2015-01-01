@@ -18,9 +18,15 @@ import com.archimatetool.model.IRelationship;
  */
 public class ModelUtil {
 
-    protected Map<String, IArchimateElement> lookup = new HashMap<>();
+    protected final Map<String, IArchimateElement> lookup = new HashMap<>();
 
-    public IArchimateElement createElement(IArchimateModel model, EClass type, String name, String id) {
+    protected final IArchimateModel model;
+
+    public ModelUtil(final IArchimateModel model) {
+        this.model = model;
+    }
+
+    public IArchimateElement createElement(EClass type, String name, String id) {
         if (!IArchimatePackage.eINSTANCE.getArchimateElement().isSuperTypeOf(type)) {
             throw new IllegalArgumentException("Eclass type should be of archimate element type");
         }
@@ -36,8 +42,8 @@ public class ModelUtil {
         return element;
     }
 
-    public IRelationship createRelationship(IArchimateModel model, EClass type, String name, String id,
-            IArchimateElement source, IArchimateElement target) {
+    public IRelationship createRelationship(EClass type, String name, String id, IArchimateElement source,
+            IArchimateElement target) {
         if (!IArchimatePackage.eINSTANCE.getRelationship().isSuperTypeOf(type)) {
             throw new IllegalArgumentException("Eclass type should be of relationship type");
         }
@@ -52,9 +58,8 @@ public class ModelUtil {
         return relationship;
     }
 
-    public IRelationship createRelationship(IArchimateModel model, EClass type, String name, String id, String source,
-            String target) {
-        IRelationship relationship = createRelationship(model, type, name, id, lookup.get(source), lookup.get(target));
+    public IRelationship createRelationship(EClass type, String id, String source, String target) {
+        IRelationship relationship = createRelationship(type, "Name_" + id, id, lookup.get(source), lookup.get(target));
 
         return relationship;
     }

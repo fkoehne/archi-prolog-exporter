@@ -35,9 +35,8 @@ public class TestConsistencyPredicates extends AbstractBaseTest {
             InvalidTheoryException {
         // Given ...
         // the application component "a" from the test base class
-        modelUtil.createElement(model, IArchimatePackage.eINSTANCE.getNode(), "N", "n");
-        modelUtil.createRelationship(model, IArchimatePackage.eINSTANCE.getUsedByRelationship(), "usedBy", "usedBy",
-                "n", "a");
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getNode(), "N", "n");
+        modelUtil.createRelationship(IArchimatePackage.eINSTANCE.getUsedByRelationship(), "usedBy", "n", "a");
         exporter.export(model);
         load();
 
@@ -48,4 +47,21 @@ public class TestConsistencyPredicates extends AbstractBaseTest {
         assertFalse(result.isSuccess());
     }
 
+    @Test
+    public void shouldFindRedundantRelationships() throws IOException, MalformedGoalException, NoSolutionException,
+            InvalidTheoryException {
+        // Given ...
+        // the application component "a" from the test base class
+        modelUtil.createElement(IArchimatePackage.eINSTANCE.getNode(), "N", "n");
+        modelUtil.createRelationship(IArchimatePackage.eINSTANCE.getUsedByRelationship(), "usedBy1", "n", "a");
+        modelUtil.createRelationship(IArchimatePackage.eINSTANCE.getUsedByRelationship(), "usedBy2", "n", "a");
+        exporter.export(model);
+        load();
+
+        // When
+        SolveInfo result = engine.solve("redundantRelationship(X,Y)."); // Source / Target
+
+        // Then
+        checkThat(result).is("n");
+    }
 }
